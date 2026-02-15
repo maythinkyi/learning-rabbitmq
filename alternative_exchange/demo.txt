@@ -1,0 +1,25 @@
+                    Publisher Systems
+          (Device, Billing, Fiber, etc.)
+                              |
+                              v
+                   +----------------------+
+                   |   isp.topic          |
+                   |   (topic exchange)   |
+                   |   with AE configured |
+                   +----------+-----------+
+                              |
+              +---------------+---------------+
+              |                               |
+     +----------------+               (unmatched key)
+     |  device_queue  |                        |
+     |  device.*.*    |                        v
+     +----------------+               +------------------+
+                                       |  isp.unrouted   |
+     +----------------+                |  (fanout AE)    |
+     |  billing_queue |                +--------+--------+
+     |  billing.*.*   |                         |
+     +----------------+                         v
+                                         +------------------+
+                                         |  unrouted_queue  |
+                                         |  (monitor/log)   |
+                                         +------------------+

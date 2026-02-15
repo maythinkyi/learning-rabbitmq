@@ -1,0 +1,39 @@
+                   +-------------------+
+                   |   API Service     |
+                   |  (RPC Client)     |
+                   +---------+---------+
+                             |
+                Publish request (correlation_id)
+                             |
+                             v
+                   +-------------------+
+                   |  rpc_queue        |
+                   |  (direct exchange)|
+                   +---------+---------+
+                             |
+                             v
+                   +-------------------+
+                   |  Billing Service  |
+                   |  (RPC Server)     |
+                   +---------+---------+
+                             |
+                 Send reply to reply_to queue
+                             |
+                             v
+                +---------------------------+
+                | Exclusive Callback Queue  |
+                |  (created by client)      |
+                +---------------------------+
+
+Incoming Request (from Client)
+{
+  "customer_id": 123
+}
+"Billing service, please check the credit score for customer 123."
+
+Response (From Server)
+{
+  "status": "success",
+  "credit_score": 700,
+  "eligible": true
+}

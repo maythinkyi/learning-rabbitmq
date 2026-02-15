@@ -1,0 +1,23 @@
+          Publisher Systems
+                |
+                v
+         +----------------+
+         | task_exchange  |
+         | (direct/topic) |
+         +-------+--------+
+                 |
+                 v
+          +---------------+
+          |  task_queue   |
+          | (TTL, DLX)    |
+          +-------+-------+
+                  |  Reject / Expire
+                  v
+          +----------------+
+          | dlx_exchange   |
+          +-------+--------+
+                  |
+                  v
+             +----------+
+             | dlq      |
+             +----------+

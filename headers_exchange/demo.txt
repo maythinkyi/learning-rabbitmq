@@ -1,0 +1,30 @@
+                       Publisher Systems
+          (Device, Fiber, Billing, etc.)
+                              |
+                              v
+                   +----------------------+
+                   | RabbitMQ             |
+                   | Headers Exchange     |
+                   | isp.headers          |
+                   +----------+-----------+
+                              |
+          +-------------------+-------------------+-------------------+-------------------+
+          |                   |                   |                   |
+    +------------+      +------------+      +------------+      +---------------+
+    | NOC Queue  |      | Billing    |      | Yangon     |      | Emergency     |
+    |            |      | Queue      |      | Queue      |      | Queue         |
+    +------------+      +------------+      +------------+      +---------------+
+Binding:             Binding:           Binding:             Binding:
+x-match: any         x-match: all      x-match: any         x-match: all
+Headers:             Headers:          Headers:             Headers:
+domain: device       domain: billing   region: yangon       event_type: offline
+domain: fiber        priority: high                        event_type: cut
+priority: any                                             priority: high
+
+
+headers = {'domain':'device','region':'yangon','event_type':'offline','priority':'high'}
+headers = {'domain':'billing','region':'mandalay','event_type':'overdue','priority':'high'}
+headers = {'domain':'fiber','region':'mandalay','event_type':'cut','priority':'low'}
+headers = {'domain':'device','region':'yangon','event_type':'online','priority':'low'}
+headers = {'domain':'device','region':'mandalay','event_type':'offline','priority':'high'}
+headers = {'domain':'fiber','region':'yangon','event_type':'cut','priority':'high'}

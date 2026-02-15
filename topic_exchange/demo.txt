@@ -1,0 +1,42 @@
+                 +-----------------+
+                 |  Device System  |
+                 |  (Publisher)    |
+                 +--------+--------+
+                          |
+                          | device.<region>.<status>
+                          | fiber.<region>.<event_type>
+                          v
+                  +-----------------+
+                  |  RabbitMQ       |
+                  |  Topic Exchange |
+                  |  isp.topic      |
+                  +--------+--------+
+           Bindings / Queues: *
+           --------------------
+                  |
+   +--------------+-------------------+
+   |              |                   |
++--------+   +---------+          +---------+
+| NOC Q  |   | Billing |          | Yangon  |
+| Team   |   | Team    |          | Support |
++--------+   +---------+          +---------+
+Binding:    Binding:               Binding:
+- device.*.* - billing.*.*         - #.yangon.#
+- fiber.#    - *.region.*          (all events from Yangon)
+            (all billing events)
+   |
+   v
++---------------+
+| Emergency Q   |
+| Response Team |
++---------------+
+Binding:
+- *.#offline
+- *.#cut
+(All offline/cut events)
+
+device.yangon.online
+device.mandalay.offline
+fiber.mandalay.cut
+billing.yangon.overdue
+device.region.offline

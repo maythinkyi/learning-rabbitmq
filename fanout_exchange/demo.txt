@@ -1,0 +1,8 @@
+Producer
+    ↓
+fanout exchange (device_events_exchange)
+    ↓
+----------------------------------------
+↓              ↓                ↓
+notification   audit_log       monitoring
+queue          queue           queue

@@ -1,0 +1,11 @@
+Producer
+    ↓
+direct exchange (logs_direct_exchange)
+    ↓
+-------------------------------------
+↓              ↓               ↓
+file_queue     alert_queue     dashboard_queue
+(binding:      (binding:       (binding:
+ INFO          ERROR           WARNING
+ WARNING                        ERROR
+ ERROR)
